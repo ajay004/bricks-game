@@ -1,0 +1,169 @@
+<body>
+ <style type="text/css">
+#mycanvas{
+  margin: 0px auto ;
+  display: block;
+  
+  
+background: #eee;
+
+}
+#sc{
+  background: white;
+  width: 
+}
+body{
+  background: black;
+}
+ </style>
+
+<canvas id="mycanvas" > </canvas>
+<h1 id ="sc"> </h1>
+<script type="text/javascript">
+   //var a[1000][1000];
+ canvas = document.getElementById('mycanvas');
+  var ctx = canvas.getContext("2d"); 
+
+  //ctx.canvas.width  = window.innerWidth;
+  //ctx.canvas.height = window.innerHeight;
+    ctx.canvas.width  = 1200;
+    ctx.canvas.height = 620;
+
+    var x= canvas.width/2;
+    var y= canvas.height -10;
+    
+    dx = 2;
+    
+    dy = 1;
+     x1 =100;
+     y1 = 100;
+     x2 = canvas.height;
+     y2 = canvas.width/2 ;
+  var score =0;
+    var bricks = [];
+    var k=0;
+
+          var r_k = false;
+          var l_k = false;
+
+for(y1=100; y1<=300; y1=y1+30)
+for (x1 = 100;  x1<=1200; x1=x1+100)
+ bricks[k++] = 1;
+
+
+
+
+ function aj_draw() {
+
+
+
+//for(y1=100; y1<=300; y1=y1+30)
+//for (x1 = 100;  x1<=1200; x1=x1+100)
+ //a[x1][y1] = 1;
+
+ctx.clearRect(0, 0, canvas.width, canvas.height);
+ k=0;
+
+
+
+for(y1=100; y1<=300; y1=y1+30)
+for (x1 = 100;  x1<=1200; x1=x1+100)
+{
+    k++; 
+    if(bricks[k]==1)
+  if((x>x1)&&x<(x1+50)&&((y>y1)&&y<(y1+20)))
+  {  
+      bricks[k] = 0;
+       score++;
+     // dy = -dy;
+       dx = -dx;
+         //bricks[x1][y1] =0;
+  }
+   document.getElementById("sc").innerHTMl = score;
+
+
+ //if(a[x1][y1]==1)
+ if(bricks[k]!=0)
+ {  
+ctx.beginPath();
+ctx.rect(x1, y1,50,20);
+ctx.fillStyle = "black";
+ctx.fill();
+ctx.closePath();
+}
+}
+
+
+ctx.arc(x, y, 10,0,Math.PI*2,false);
+ctx.fillStyle = "black";
+ctx.fill();
+ctx.closePath();
+x = x - dx;
+y = y - dy;
+if(x==0||x==ctx.canvas.width)
+{
+  dx = -dx;
+  //dy = -dy;
+}
+
+if(y==0)
+dy = -dy;
+
+ ctx.beginPath();
+ctx.rect(x2, y2,80,13);
+ctx.fillStyle = "black";
+ctx.fill();
+ctx.closePath();
+
+    document.addEventListener("keydown", right, false);
+    document.addEventListener("keyup", left, false); 
+
+
+if(r_k && x2< canvas.width) {
+    if(x2!=canvas.width)
+    x2 += 5;
+}
+else if(l_k && y2> 0) {
+    x2 -= 5;
+}
+
+//r_k = false;
+//l_k = false;
+
+if(x>x2&&x<(x2+80)&&y>(canvas.height-13-15))
+  dy= -dy;
+  if(y>=620)
+  {
+  alert("GAME OVER");
+    document.location.reload();
+}
+ }
+
+function right(value) {
+    if(value.keyCode == 39) {
+        r_k  = true;
+    }
+    else if(value.keyCode == 37) {
+        l_k  = true;
+    }
+}
+
+
+
+function left(value) {
+    if(value.keyCode == 39) {
+        r_k = false;
+    }
+    else if(value.keyCode == 37) {
+        l_k = false;
+ 
+    }
+}
+
+
+
+
+setInterval(aj_draw,10);
+</script>
+
+</body>
